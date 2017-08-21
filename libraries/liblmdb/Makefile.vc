@@ -6,6 +6,12 @@ AR=lib.exe
 
 PREFIX=install
 
+!IF "$(GL)"=="1"
+CFLAGS_GL=/GL
+!ELSE
+CFLAGS_GL=
+!ENDIF
+
 !IF "$(DEBUG)"=="1"
 LMDB_LIB=liblmdb_a_debug.lib
 LMDB_LIB_PDB=liblmdb_a_debug.pdb
@@ -13,7 +19,7 @@ CFLAGS = /nologo /I win32 /Zi /MDd /Od /W3 /D_CRT_SECURE_NO_WARNINGS=1
 !ELSE
 LMDB_LIB=liblmdb_a.lib
 LMDB_LIB_PDB=liblmdb_a.pdb
-CFLAGS = /nologo /I win32 /Zi /MD /guard:cf /Zc:inline /Ox /W3 /GF /GL /Gw /D_CRT_SECURE_NO_WARNINGS=1
+CFLAGS = /nologo /I win32 /Zi /MD /guard:cf /Zc:inline /Ox /W3 /GF $(CFLAGS_GL) /Gw /D_CRT_SECURE_NO_WARNINGS=1
 !ENDIF
 PROGS=mdb_copy.exe mdb_load.exe mdb_stat.exe mdb_dump.exe
 
